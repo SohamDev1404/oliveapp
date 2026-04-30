@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
+import oliveBarcodeImage from 'C:/Users/Soham/.cursor/projects/c-Users-Soham-Downloads-oliveapp/assets/c__Users_Soham_AppData_Roaming_Cursor_User_workspaceStorage_139a11e37078d70ca7773777707ee47b_images_image-8922d5ff-ee56-4f3e-aca3-ffdf4cdd980b.png';
 
 const CheckIcon = ({ className = '' }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" className={className}>
@@ -29,39 +30,43 @@ const mealSuggestions = [
 
 export default function HowItWorks() {
   return (
-    <div className="md:my-24 my-8 max-w-7xl px-4 md:px-8 mx-auto">
-      <div className="py-4 md:py-16 flex flex-col max-w-6xl mx-auto items-center">
-        <div className="flex relative text-[#1F3824] items-center justify-center mb-2">
-          <h2 className="font-sans text-[#1F3824] max-w-xl font-[500] text-2xl md:text-[3.2rem] text-center">
+    <div className="my-10 md:my-20 max-w-6xl px-4 md:px-6 mx-auto">
+      <div className="py-4 md:py-10 flex flex-col max-w-5xl mx-auto items-center">
+        <div className="mb-2 flex items-start justify-center gap-3 text-[#1F3824]">
+          <h2 className="font-sans text-[#1F3824] max-w-[360px] md:max-w-[430px] font-[500] text-2xl md:text-[2.35rem] leading-[1.15] text-center">
             How the Olive Food Scanner App Works
           </h2>
+          <span className="mt-1 text-3xl md:text-4xl">🥑</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 pt-8 md:pt-24 gap-6 w-full">
+        <div className="grid w-full grid-cols-1 gap-4 pt-8 md:grid-cols-3 md:pt-10">
           {/* Card 1: Scan & Detect */}
-          <div className="w-full mx-auto p-8 rounded-xl border border-[rgba(255,255,255,0.10)] bg-[#F5FAF6] shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group">
-            <h3 className="text-base font-semibold text-gray-800 py-2">Scan &amp; Detect</h3>
-            <div className="h-[200px] rounded-2xl relative overflow-hidden bg-white">
+          <div className="w-full mx-auto rounded-2xl border border-[rgba(255,255,255,0.10)] bg-[#F5FAF6] p-5 md:p-5 shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group">
+            <h3 className="py-1 text-[12px] font-semibold text-gray-800">Scan &amp; Detect</h3>
+            <div className="relative h-[138px] overflow-hidden rounded-2xl bg-white">
               {/* Scanner corners */}
-              <div className="absolute top-4 left-4 w-8 h-8 border-t-[3px] border-l-[3px] border-[#1F3824] opacity-30 rounded-tl-xl"></div>
-              <div className="absolute top-4 right-4 w-8 h-8 border-t-[3px] border-r-[3px] border-[#1F3824] opacity-30 rounded-tr-xl"></div>
-              <div className="absolute bottom-4 left-4 w-8 h-8 border-b-[3px] border-l-[3px] border-[#1F3824] opacity-30 rounded-bl-xl"></div>
-              <div className="absolute bottom-4 right-4 w-8 h-8 border-b-[3px] border-r-[3px] border-[#1F3824] opacity-30 rounded-br-xl"></div>
-              {/* Barcode visual */}
+              <div className="absolute top-4 left-4 h-6 w-6 rounded-tl-xl border-t-[2px] border-l-[2px] border-[#1F3824] opacity-30"></div>
+              <div className="absolute top-4 right-4 h-6 w-6 rounded-tr-xl border-t-[2px] border-r-[2px] border-[#1F3824] opacity-30"></div>
+              <div className="absolute bottom-4 left-4 h-6 w-6 rounded-bl-xl border-b-[2px] border-l-[2px] border-[#1F3824] opacity-30"></div>
+              <div className="absolute bottom-4 right-4 h-6 w-6 rounded-br-xl border-b-[2px] border-r-[2px] border-[#1F3824] opacity-30"></div>
+              {/* Olive visual */}
               <div className="flex items-center justify-center h-full">
-                <div className="flex gap-0.5 items-end h-20">
-                  {[3,1,4,1,5,9,2,6,5,3,5,8,9,7,9,3,2,3,8,4,6,2,6,4,3,3,8,3,2,7,9,5].map((h, i) => (
-                    <div key={i} className="bg-[#1F3824]" style={{ width: '3px', height: `${h * 8}px`, opacity: 0.8 }}></div>
-                  ))}
+                <div className="animate-olive-scan relative h-[76px] w-[68px] rotate-[16deg] overflow-hidden rounded-[22px]">
+                  <Image
+                    src={oliveBarcodeImage}
+                    alt="Olive with barcode"
+                    fill
+                    className="object-contain"
+                    sizes="68px" />
                 </div>
               </div>
               {/* Scan line */}
-              <div className="absolute left-8 right-8 h-0.5 bg-[#1F3824] opacity-60" style={{ top: '40%' }}></div>
+              <div className="animate-scan-line absolute left-7 right-7 h-0.5 bg-[#1F3824] opacity-60 shadow-[0_0_8px_rgba(31,56,36,0.35)]" style={{ top: '34%' }}></div>
               {/* Olive sparkles */}
               {[...Array(5)].map((_, i) => (
                 <div
                   key={i}
-                  className="absolute w-2 h-2 text-[#AEB93E] opacity-60"
+                  className="absolute h-2 w-2 text-[#AEB93E] opacity-60"
                   style={{
                     left: `${10 + i * 20}%`,
                     top: `${20 + (i % 3) * 25}%`,
@@ -72,76 +77,76 @@ export default function HowItWorks() {
                 </div>
               ))}
             </div>
-            <p className="text-sm font-[500] text-neutral-600 max-w-sm mt-4">
+            <p className="mt-3 max-w-sm text-[11px] leading-[1.65] font-[500] text-neutral-600">
               When you open Olive simply scan the barcode to instantly detect product ingredients. Olive&apos;s intuitive design means busy parents can quickly see which items contain harmful substances, delivering peace of mind with every scan.
             </p>
           </div>
 
           {/* Card 2: Data Analysis */}
-          <div className="w-full mx-auto p-8 rounded-xl border border-[rgba(255,255,255,0.10)] bg-[#F5FAF6] shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group">
-            <h3 className="text-base font-semibold text-gray-800 py-2">Data Analysis &amp; Validation</h3>
-            <div className="h-[200px] rounded-2xl relative overflow-hidden">
-              {/* Scrolling product images */}
-              <div
-                className="absolute top-1/2 -translate-y-1/2 flex gap-2 items-center"
-                style={{ maskImage: 'linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%)' }}
-              >
-                <div className="flex gap-2 animate-scroll-left" style={{ width: 'max-content' }}>
-                  {[...productImages, ...productImages].map((img, i) => (
-                    <div key={i} className="relative w-16 h-16 shrink-0 rounded-2xl overflow-hidden" style={{ opacity: 0.5 }}>
-                      <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="64px" />
-                    </div>
-                  ))}
+          <div className="w-full mx-auto rounded-2xl border border-[rgba(255,255,255,0.10)] bg-[#F5FAF6] p-5 shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group">
+            <h3 className="py-1 text-[12px] font-semibold text-gray-800">Data Analysis &amp; Validation</h3>
+            <div className="relative h-[138px] overflow-hidden rounded-2xl">
+              <div className="absolute inset-x-0 top-[42px] flex items-center justify-center gap-3">
+                <div className="animate-analysis-pop relative h-[34px] w-[34px] overflow-hidden rounded-[12px] opacity-25" style={{ animationDelay: '0s' }}>
+                  <Image src={productImages[0].src} alt={productImages[0].alt} fill className="object-cover" sizes="52px" />
+                </div>
+                <div className="animate-analysis-pop relative h-[50px] w-[50px] overflow-hidden rounded-[16px] shadow-md" style={{ animationDelay: '0.45s' }}>
+                  <Image src={productImages[7].src} alt={productImages[7].alt} fill className="object-cover" sizes="74px" />
+                </div>
+                <div className="animate-analysis-pop relative h-[50px] w-[50px] overflow-hidden rounded-[16px] shadow-md" style={{ animationDelay: '0.9s' }}>
+                  <Image src={productImages[6].src} alt={productImages[6].alt} fill className="object-cover" sizes="74px" />
+                </div>
+                <div className="animate-analysis-pop relative h-[34px] w-[34px] overflow-hidden rounded-[12px] opacity-25" style={{ animationDelay: '1.35s' }}>
+                  <Image src={productImages[3].src} alt={productImages[3].alt} fill className="object-cover" sizes="52px" />
                 </div>
               </div>
-              {/* Center glow */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-24 h-32 bg-gradient-to-b from-[#1F3824]/0 via-[#1F3824]/20 to-[#1F3824]/0 rounded-full blur-xl"></div>
+
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <div className="h-[92px] w-[52px] bg-gradient-to-b from-transparent via-[#637769]/25 to-transparent blur-xl"></div>
               </div>
-              {/* Safe badge */}
-              <div className="absolute bottom-2 left-0 right-0 flex items-center justify-center">
-                <div className="bg-[#D4E8D8] font-[500] flex items-center gap-2 w-fit px-3 py-1 rounded-2xl shadow-sm">
-                  <CheckIcon className="w-4 h-4 text-[#1F3824]" />
+
+              <div className="absolute inset-x-0 bottom-1 flex items-center justify-center">
+                <div className="flex w-fit items-center gap-2 rounded-full bg-[#DDE9DE] px-3 py-1.5 font-[500] shadow-sm">
+                  <CheckIcon className="h-3.5 w-3.5 text-[#1F3824]" />
                   <span className="text-xs text-[#1F3824]">Safe to consume</span>
                 </div>
               </div>
             </div>
-            <p className="text-sm font-[500] text-neutral-600 max-w-sm mt-4">
+            <p className="mt-3 max-w-sm text-[11px] leading-[1.65] font-[500] text-neutral-600">
               After scanning, our food scanner app compares product data with an extensive, up-to-date food database. Using expert nutritional guidelines, Olive filters out potentially dangerous ingredients so you never have to second guess.
             </p>
           </div>
 
           {/* Card 3: Actionable Insights */}
-          <div className="w-full mx-auto p-8 rounded-xl border border-[rgba(255,255,255,0.10)] bg-[#F5FAF6] shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group">
-            <h3 className="text-base font-semibold text-gray-800 py-2">Actionable Insights &amp; Recommendations</h3>
-            <div className="h-[200px] rounded-2xl relative overflow-hidden">
-              {/* Stacked product images */}
-              <div className="flex items-center justify-center pt-4 relative z-10">
-                <div className="relative w-20 h-28 rounded-2xl overflow-hidden border-2 border-white shadow-lg" style={{ transform: 'translateX(40px) rotate(-12deg) scale(0.9)', zIndex: 1 }}>
-                  <Image src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=200&q=80" alt="Product" fill className="object-cover" sizes="80px" />
-                </div>
-                <div className="relative w-20 h-28 rounded-2xl overflow-hidden border-2 border-white shadow-xl" style={{ zIndex: 3 }}>
-                  <Image src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=200&q=80" alt="Product" fill className="object-cover" sizes="80px" />
-                </div>
-                <div className="relative w-20 h-28 rounded-2xl overflow-hidden border-2 border-white shadow-lg" style={{ transform: 'translateX(-40px) rotate(12deg) scale(0.9)', zIndex: 1 }}>
-                  <Image src="https://images.unsplash.com/photo-1559181567-c3190bba0ade?w=200&q=80" alt="Product" fill className="object-cover" sizes="80px" />
-                </div>
-              </div>
-              {/* Scrolling meal suggestions */}
-              <div className="absolute inset-0 flex flex-col items-center gap-2 overflow-hidden" style={{ top: '55%' }}>
-                <div className="flex flex-col gap-2 animate-scroll-left" style={{ width: '80%' }}>
+          <div className="w-full mx-auto rounded-2xl border border-[rgba(255,255,255,0.10)] bg-[#F5FAF6] p-5 shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group">
+            <h3 className="py-1 text-[12px] font-semibold text-gray-800">Actionable Insights &amp; Recommendations</h3>
+            <div className="relative h-[150px] overflow-hidden rounded-2xl">
+              <div className="absolute inset-x-8 top-2 h-[112px] overflow-hidden opacity-55">
+                <div className="flex flex-col gap-3 animate-scroll-up-slow">
                   {[...mealSuggestions, ...mealSuggestions].map((meal, i) => (
-                    <div key={i} className="flex items-center justify-center w-full rounded-md p-2 h-8 text-center bg-[#38664126]">
-                      <p className="text-xs font-normal text-neutral-600 truncate">{meal}</p>
+                    <div key={`${meal}-${i}`} className="flex h-7 items-center justify-center rounded-xl bg-[#DDE9DE]">
+                      <p className={`text-[11px] text-[#738173] ${i % mealSuggestions.length === 2 ? 'opacity-80' : 'opacity-55'}`}>{meal}</p>
                     </div>
                   ))}
                 </div>
               </div>
-              {/* Gradient overlays */}
-              <div className="absolute top-0 left-0 right-0 h-[20%] bg-gradient-to-b from-[#F5FAF6] to-transparent pointer-events-none"></div>
-              <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-[#F5FAF6] to-transparent pointer-events-none"></div>
+
+              <div className="relative z-10 flex items-center justify-center pt-5">
+                <div className="relative h-[98px] w-[66px] translate-x-[26px] rotate-[-10deg] overflow-hidden rounded-[18px] border-2 border-white shadow-lg">
+                  <Image src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=300&q=80" alt="Recommended product" fill className="object-cover" sizes="92px" />
+                </div>
+                <div className="relative z-20 h-[118px] w-[78px] overflow-hidden rounded-[22px] border-2 border-white shadow-xl">
+                  <Image src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=400&q=80" alt="Primary recommendation" fill className="object-cover" sizes="112px" />
+                </div>
+                <div className="relative h-[98px] w-[66px] translate-x-[-26px] rotate-[10deg] overflow-hidden rounded-[18px] border-2 border-white shadow-lg">
+                  <Image src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=300&q=80" alt="Alternative recommendation" fill className="object-cover" sizes="92px" />
+                </div>
+              </div>
+
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#F5FAF6] to-transparent"></div>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#F5FAF6] to-transparent"></div>
             </div>
-            <p className="text-sm font-[500] text-neutral-600 max-w-sm mt-4">
+            <p className="mt-3 max-w-sm text-[11px] leading-[1.65] font-[500] text-neutral-600">
               Once analyzed, Olive provides tailored insights and healthier product suggestions. Olive proactively flags harmful ingredients and offers personalized recommendations, empowering you to make better choices for your family&apos;s health &amp; nutrition.
             </p>
           </div>

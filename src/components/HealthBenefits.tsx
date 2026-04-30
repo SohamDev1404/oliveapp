@@ -1,6 +1,10 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import strausShelfImage from 'C:/Users/Soham/.cursor/projects/c-Users-Soham-Downloads-oliveapp/assets/c__Users_Soham_AppData_Roaming_Cursor_User_workspaceStorage_139a11e37078d70ca7773777707ee47b_images_image-74cdcd09-ae62-4856-bb3f-f4a3de61a17c.png';
+import olipopImage from 'C:/Users/Soham/.cursor/projects/c-Users-Soham-Downloads-oliveapp/assets/c__Users_Soham_AppData_Roaming_Cursor_User_workspaceStorage_139a11e37078d70ca7773777707ee47b_images_image-ef12785f-94d0-40bc-a9b0-2d9f75f35247.png';
+import honeyMamasImage from 'C:/Users/Soham/.cursor/projects/c-Users-Soham-Downloads-oliveapp/assets/c__Users_Soham_AppData_Roaming_Cursor_User_workspaceStorage_139a11e37078d70ca7773777707ee47b_images_image-c158f468-03d4-47a8-8473-1ed0d763df53.png';
+import strausPackshotImage from 'C:/Users/Soham/.cursor/projects/c-Users-Soham-Downloads-oliveapp/assets/c__Users_Soham_AppData_Roaming_Cursor_User_workspaceStorage_139a11e37078d70ca7773777707ee47b_images_image-f4534749-878e-486f-801e-71da40097dc1.png';
 
 const CheckIcon = ({ className = '' }: {className?: string;}) =>
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" className={className}>
@@ -55,18 +59,57 @@ const benefitSections = [
 
 
 export default function HealthBenefits() {
+  const nutritionalCardRef = useRef<HTMLDivElement>(null);
+  const [animatedScore, setAnimatedScore] = useState(0);
+  const [hasAnimatedScore, setHasAnimatedScore] = useState(false);
+
+  useEffect(() => {
+    const targetNode = nutritionalCardRef.current;
+    if (!targetNode || hasAnimatedScore) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry?.isIntersecting || hasAnimatedScore) return;
+
+        setHasAnimatedScore(true);
+        const target = 96;
+        const durationMs = 1200;
+        const startTime = performance.now();
+
+        const tick = (now: number) => {
+          const progress = Math.min((now - startTime) / durationMs, 1);
+          // Ease-out so the count starts lively and settles into 96.
+          const eased = 1 - (1 - progress) * (1 - progress);
+          setAnimatedScore(Math.round(target * eased));
+
+          if (progress < 1) {
+            window.requestAnimationFrame(tick);
+          }
+        };
+
+        window.requestAnimationFrame(tick);
+        observer.disconnect();
+      },
+      { threshold: 0.45 }
+    );
+
+    observer.observe(targetNode);
+    return () => observer.disconnect();
+  }, [hasAnimatedScore]);
+
   return (
     <div className="relative bg-[#F5FAF6]">
       {/* Dark green header */}
-      <div className="pb-24 md:py-48 bg-[#386641] px-4">
-        <div className="flex flex-col md:flex-row p-8 md:p-0 justify-between max-w-5xl mx-auto items-start gap-10">
+      <div className="bg-[#386641] px-4 pb-24 pt-14 md:pb-28 md:pt-20">
+        <div className="flex max-w-4xl flex-col items-start justify-between gap-8 px-4 md:mx-auto md:flex-row md:px-0">
           <div className="flex relative items-center justify-center">
-            <h2 className="font-sans max-w-xl font-[500] text-2xl md:text-[3.2rem] text-white">
+            <h2 className="font-sans max-w-[330px] font-[500] text-[2.15rem] leading-[1.18] tracking-[-0.02em] text-white md:text-[3rem]">
               Health Benefits of Using Olive
             </h2>
           </div>
-          <div className="flex gap-6 flex-col">
-            <div className="max-w-sm md:text-xl text-sm text-[#F5FAF6]">
+          <div className="flex max-w-[300px] flex-col gap-4">
+            <div className="max-w-sm text-[12px] leading-6 text-[#F5FAF6] md:text-[15px] md:leading-6">
               Olive proactively flags harmful ingredients and offers personalized recommendations, empowering you to make better choices for your family&apos;s health.
             </div>
             <div className="flex items-center gap-4">
@@ -74,7 +117,7 @@ export default function HealthBenefits() {
                 href="https://apps.apple.com/us/app/olive-holistic-food-scanner/id6739765789"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center cursor-pointer font-sans justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-all border bg-white text-[#386641] shadow-xs hover:bg-gray-50 px-4 py-2.5 text-sm">
+                className="inline-flex items-center cursor-pointer font-sans justify-center gap-2 whitespace-nowrap rounded-full border bg-white px-3 py-1.5 text-[11px] font-medium text-[#386641] transition-all shadow-xs hover:bg-gray-50">
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                   <path d="M15.079 5.999l.239 .012c1.43 .097 3.434 1.013 4.508 2.586a1 1 0 0 1 -.344 1.44c-.05 .028 -.372 .158 -.497 .217a4.15 4.15 0 0 0 -.722 .431c-.614 .461 -.948 1.009 -.942 1.694c.01 .885 .339 1.454 .907 1.846c.208 .143 .436 .253 .666 .33c.126 .043 .426 .116 .444 .122a1 1 0 0 1 .662 .942c0 2.621 -3.04 6.381 -5.286 6.381c-.79 0 -1.272 -.091 -1.983 -.315l-.098 -.031c-.463 -.146 -.702 -.192 -1.133 -.192c-.52 0 -.863 .06 -1.518 .237l-.197 .053c-.575 .153 -.964 .226 -1.5 .248c-2.749 0 -5.285 -5.093 -5.285 -9.072c0 -3.87 1.786 -6.92 5.286 -6.92c.297 0 .598 .045 .909 .128c.403 .107 .774 .26 1.296 .508c.787 .374 .948 .44 1.009 .44h.016c.03 -.003 .128 -.047 1.056 -.457c1.061 -.467 1.864 -.685 2.746 -.616l-.24 -.012z" />
@@ -88,71 +131,89 @@ export default function HealthBenefits() {
       </div>
 
       {/* Benefit cards */}
-      <div className="-mt-24 flex flex-col px-4 md:px-8 pb-24 gap-8">
+      <div className="-mt-12 flex flex-col gap-8 px-4 pb-24 md:-mt-10 md:px-8">
         {/* Card 1: Nutritional Clarity */}
         <div className="p-4 bg-white max-w-5xl mx-auto rounded-2xl grid grid-cols-1 lg:grid-cols-2 w-full shadow-sm">
-          <div className="flex flex-col gap-4 justify-between p-4">
-            <h3 className="font-sans text-[#1F3824] max-w-xl font-[500] text-xl md:text-3xl">Achieve Nutritional Clarity</h3>
-            <ul className="flex flex-col gap-3 max-w-sm self-start">
+          <div className="flex flex-col justify-between gap-4 p-4">
+            <h3 className="font-sans max-w-xl text-[16px] font-[500] text-[#1F3824] md:text-[17px]">Achieve Nutritional Clarity</h3>
+            <ul className="flex max-w-sm flex-col gap-3 self-start">
               {benefitSections[0].points.map((point, i) =>
-              <li key={i} className="flex items-start gap-4 text-[#1F3824]">
-                  <div className="w-6 flex-shrink-0">
-                    <CheckIcon className="w-6 h-6 text-[#1F3824]" />
+              <li key={i} className="flex items-start gap-3 text-[#1F3824]">
+                  <div className="w-4 flex-shrink-0 pt-0.5">
+                    <CheckIcon className="h-4 w-4 text-[#1F3824]" />
                   </div>
-                  <div className="md:text-lg text-sm">{point}</div>
+                  <div className="text-[11px] leading-[1.7] md:text-[12px]">{point}</div>
                 </li>
               )}
             </ul>
           </div>
           <div>
-            <div className="bg-gradient-to-b from-[#EFF6F0] to-[#9DC8A3] rounded-2xl w-full h-[350px] md:h-[450px] overflow-hidden">
+            <div className="bg-gradient-to-b from-[#EFF6F0] to-[#9DC8A3] rounded-2xl w-full w-[300px] h-[450px] md:w-[500px] md:h-[500px] overflow-hidden">
               {/* Stacked product images */}
-              <div className="flex items-center justify-center pt-6">
-                <div className="relative w-28 h-36 rounded-3xl overflow-hidden border-2 border-white shadow-lg" style={{ transform: 'translateX(60px) rotate(-12deg) scale(0.9)', zIndex: 1 }}>
-                  <Image src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=200&q=80" alt="Product" fill className="object-cover" sizes="112px" />
+              <div className="flex items-center justify-center pt-4">
+                <div className="relative h-32 w-[7.5rem] overflow-hidden rounded-3xl border-2 border-white shadow-lg md:h-[12.5rem] md:w-40" style={{ transform: 'translateX(5rem) rotate(-12deg) scale(0.9)', zIndex: 1 }}>
+                  <Image src={honeyMamasImage} alt="Honey Mamas product" fill className="object-cover" sizes="160px" />
                 </div>
-                <div className="relative w-28 h-36 rounded-3xl overflow-hidden border-2 border-white shadow-xl" style={{ zIndex: 3 }}>
-                  <Image src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=200&q=80" alt="Straus Ice Cream" fill className="object-cover" sizes="112px" />
+                <div className="relative z-20 h-32 w-[7.5rem] overflow-hidden rounded-3xl border-2 border-white shadow-xl md:h-[12.5rem] md:w-40">
+                  <Image src={strausShelfImage} alt="Straus Ice Cream on shelf" fill className="object-cover" sizes="160px" />
                 </div>
-                <div className="relative w-28 h-36 rounded-3xl overflow-hidden border-2 border-white shadow-lg" style={{ transform: 'translateX(-60px) rotate(12deg) scale(0.9)', zIndex: 1 }}>
-                  <Image src="https://images.unsplash.com/photo-1559181567-c3190bba0ade?w=200&q=80" alt="Product" fill className="object-cover" sizes="112px" />
+                <div className="relative h-32 w-[7.5rem] overflow-hidden rounded-3xl border-2 border-white shadow-lg md:h-[12.5rem] md:w-40" style={{ transform: 'translateX(-5rem) rotate(12deg) scale(0.9)', zIndex: 1 }}>
+                  <Image src={olipopImage} alt="Olipop can" fill className="object-cover" sizes="160px" />
                 </div>
               </div>
               {/* Score card */}
-              <div className="px-4 py-3 bg-white/50 relative flex flex-row gap-4 mx-auto max-w-[90%] mt-6 rounded-2xl">
-                <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
-                  <Image src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=100&q=80" alt="Straus Ice Cream" width={64} height={64} className="object-cover w-full h-full" />
+              <div ref={nutritionalCardRef} className="relative mx-auto mt-4 flex max-w-[82%] flex-row gap-3 rounded-2xl bg-white/70 px-4 py-3 backdrop-blur-sm">
+                <div className="h-11 w-11 flex-shrink-0 overflow-hidden rounded-xl">
+                  <Image src={strausPackshotImage} alt="Straus Ice Cream packshot" width={44} height={44} className="object-cover w-full h-full" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="font-semibold text-base text-[#1F3824]">Straus Ice Cream</span>
+                  <span className="text-[13px] font-semibold text-[#1F3824]">Straus Ice Cream</span>
                   <div className="flex gap-2 items-center">
-                    <span className="font-bold text-lg text-[#1F382499]">92/100</span>
-                    <span className="font-semibold text-sm text-[#1F382499]">Excellent</span>
+                    <span className={`text-[13px] font-bold text-[#1F382499] transition-transform duration-300 ${hasAnimatedScore ? 'scale-100' : 'scale-110'}`}>
+                      {animatedScore}/100
+                    </span>
+                    <span className="text-[11px] font-semibold text-[#1F382499]">Excellent</span>
                   </div>
                 </div>
               </div>
               {/* Positives/Negatives */}
-              <div className="flex flex-row w-full justify-around p-4 pb-0 gap-4">
-                <div className="flex flex-col gap-2 rounded-2xl w-full flex-1 bg-white/50 p-3">
-                  <div className="font-semibold text-sm w-full justify-center flex items-center gap-1 text-[#1F3824CC]">
-                    <CheckIcon className="w-4 h-4" />
+              <div className="flex flex-row w-full h-full justify-around p-4 pb-0 gap-4">
+                <div className="flex flex-col gap-2 rounded-2xl w-full flex-1 bg-white/50 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                  <div className="flex w-full items-center justify-center gap-2 text-[12px] font-semibold text-[#50674E]">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#50674E]">
+                      <CheckIcon className="h-3 w-3 text-white" />
+                    </span>
                     Positives
                   </div>
-                  <div className="grid grid-cols-12 gap-1">
-                    {[5, 5, 2, 8, 4, 6, 6, 5, 7].map((span, i) =>
-                    <div key={i} className={`col-span-${span} h-5 rounded-md bg-white/60`}></div>
-                    )}
+                  <div className="grid grid-cols-12 grid-flow-row-dense w-full gap-1 p-2">
+                    <div className="col-span-5 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-5 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-2 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-8 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-4 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-6 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-6 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-5 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-7 h-[1.688rem] rounded-md bg-white/60"></div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2 rounded-2xl w-full flex-1 bg-white/50 p-3">
-                  <div className="font-semibold text-sm w-full justify-center flex items-center gap-1 text-[#7A4343CC]">
-                    <XIcon className="w-4 h-4" />
+                <div className="flex flex-col gap-2 rounded-2xl w-full flex-1 bg-white/50 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                  <div className="flex w-full items-center justify-center gap-2 text-[12px] font-semibold text-[#9A6A6A]">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#9A6A6A]">
+                      <XIcon className="h-3 w-3 text-white" />
+                    </span>
                     Negatives
                   </div>
-                  <div className="grid grid-cols-12 gap-1">
-                    {[5, 5, 2, 8, 4, 6, 6, 5, 7].map((span, i) =>
-                    <div key={i} className={`col-span-${span} h-5 rounded-md bg-white/60`}></div>
-                    )}
+                  <div className="grid grid-cols-12 grid-flow-row-dense w-full gap-1 p-2">
+                    <div className="col-span-5 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-5 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-2 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-8 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-4 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-6 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-6 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-5 h-[1.688rem] rounded-md bg-white/60"></div>
+                    <div className="col-span-7 h-[1.688rem] rounded-md bg-white/60"></div>
                   </div>
                 </div>
               </div>
@@ -176,51 +237,73 @@ export default function HealthBenefits() {
             </ul>
           </div>
           <div>
-            <div className="bg-gradient-to-b overflow-hidden from-[#FFF0F0] to-[#FFC2D0] rounded-2xl w-full h-[300px] md:h-[400px]">
-              <div className="w-[150%] h-full mt-8 md:mt-16 ml-[-25%] -rotate-[15deg] flex flex-col gap-6 overflow-hidden py-4">
-                {/* Positive tags row */}
-                <div className="flex gap-3 animate-scroll-left" style={{ width: 'max-content' }}>
-                  {[...positiveIngredients, ...positiveIngredients].map((tag, i) =>
-                  <div key={i} className="shrink-0">
-                      <div className="flex items-center bg-black/10 px-3 py-2 rounded-full gap-2 whitespace-nowrap text-sm">
-                        <CheckIcon className="w-4 h-4" />
-                        {tag}
-                      </div>
+            <div className="bg-gradient-to-b overflow-hidden from-[#FFF0F0] to-[#FFC2D0] rounded-2xl w-full w-[300px] h-[300px] md:w-[500px] md:h-[500px]">
+              <div className="w-[150%] h-full mt-[2rem] md:mt-[5rem] ml-[-25%] -rotate-[15deg]">
+                <div className="flex flex-col gap-8 w-full overflow-hidden py-4">
+                  <div className="relative w-full h-[40px] flex items-center overflow-hidden">
+                    <div className="flex items-center gap-4 animate-scroll-left" style={{ width: 'max-content' }}>
+                      {[...positiveIngredients.slice(0, 7), ...positiveIngredients.slice(0, 7)].map((tag, i) => (
+                        <div key={`pos-a-${i}`} className="shrink-0 mr-4">
+                          <div className="flex items-center bg-black/10 p-3 rounded-full gap-2 whitespace-nowrap text-sm">
+                            <CheckIcon className="w-6 h-6" />
+                            {tag}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  )}
-                </div>
-                {/* Negative tags row */}
-                <div className="flex gap-3 animate-scroll-right" style={{ width: 'max-content' }}>
-                  {[...negativeIngredients, ...negativeIngredients].map((tag, i) =>
-                  <div key={i} className="shrink-0">
-                      <div className="flex items-center bg-black/10 px-3 py-2 rounded-full gap-2 whitespace-nowrap text-sm">
-                        <XIcon className="w-4 h-4" />
-                        {tag}
-                      </div>
+                  </div>
+
+                  <div className="relative w-full h-[40px] flex items-center overflow-hidden">
+                    <div className="flex items-center gap-4 animate-scroll-right" style={{ width: 'max-content' }}>
+                      {[...positiveIngredients.slice(7), ...positiveIngredients.slice(0, 5), ...positiveIngredients.slice(7), ...positiveIngredients.slice(0, 5)].map((tag, i) => (
+                        <div key={`pos-b-${i}`} className="shrink-0 mr-4">
+                          <div className="flex items-center bg-black/10 p-3 rounded-full gap-2 whitespace-nowrap text-sm">
+                            <CheckIcon className="w-6 h-6" />
+                            {tag}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  )}
-                </div>
-                {/* More positive tags */}
-                <div className="flex gap-3 animate-scroll-left" style={{ width: 'max-content' }}>
-                  {[...positiveIngredients.slice(3), ...positiveIngredients.slice(3)].map((tag, i) =>
-                  <div key={i} className="shrink-0">
-                      <div className="flex items-center bg-black/10 px-3 py-2 rounded-full gap-2 whitespace-nowrap text-sm">
-                        <CheckIcon className="w-4 h-4" />
-                        {tag}
-                      </div>
+                  </div>
+
+                  <div className="relative w-full h-[40px] flex items-center overflow-hidden">
+                    <div className="flex items-center gap-4 animate-scroll-left" style={{ width: 'max-content' }}>
+                      {[...negativeIngredients.slice(0, 7), ...negativeIngredients.slice(0, 7)].map((tag, i) => (
+                        <div key={`neg-a-${i}`} className="shrink-0 mr-4">
+                          <div className="flex items-center bg-black/10 p-3 rounded-full gap-2 whitespace-nowrap text-sm">
+                            <XIcon className="w-6 h-6" />
+                            {tag}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  )}
-                </div>
-                {/* More negative tags */}
-                <div className="flex gap-3 animate-scroll-right" style={{ width: 'max-content' }}>
-                  {[...negativeIngredients.slice(4), ...negativeIngredients.slice(4)].map((tag, i) =>
-                  <div key={i} className="shrink-0">
-                      <div className="flex items-center bg-black/10 px-3 py-2 rounded-full gap-2 whitespace-nowrap text-sm">
-                        <XIcon className="w-4 h-4" />
-                        {tag}
-                      </div>
+                  </div>
+
+                  <div className="relative w-full h-[40px] flex items-center overflow-hidden">
+                    <div className="flex items-center gap-4 animate-scroll-right" style={{ width: 'max-content' }}>
+                      {[...negativeIngredients.slice(7), ...negativeIngredients.slice(0, 5), ...negativeIngredients.slice(7), ...negativeIngredients.slice(0, 5)].map((tag, i) => (
+                        <div key={`neg-b-${i}`} className="shrink-0 mr-4">
+                          <div className="flex items-center bg-black/10 p-3 rounded-full gap-2 whitespace-nowrap text-sm">
+                            <XIcon className="w-6 h-6" />
+                            {tag}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  )}
+                  </div>
+
+                  <div className="relative w-full h-[40px] flex items-center overflow-hidden">
+                    <div className="flex items-center gap-4 animate-scroll-left" style={{ width: 'max-content' }}>
+                      {[...positiveIngredients.slice(2), ...positiveIngredients.slice(2)].map((tag, i) => (
+                        <div key={`pos-c-${i}`} className="shrink-0 mr-4">
+                          <div className="flex items-center bg-black/10 p-3 rounded-full gap-2 whitespace-nowrap text-sm">
+                            <CheckIcon className="w-6 h-6" />
+                            {tag}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

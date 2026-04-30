@@ -49,6 +49,7 @@ export default function CTABanner() {
                     src={slide?.src}
                     alt={slide?.alt}
                     fill
+                    unoptimized
                     className="object-cover"
                     sizes="100vw" />
 

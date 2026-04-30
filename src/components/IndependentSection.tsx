@@ -3,27 +3,22 @@ import React from 'react';
 
 export default function IndependentSection() {
   return (
-    <div className="md:my-40 my-16 max-w-none mx-auto px-4 md:px-8">
-      <div className="flex xl:items-start xl:justify-start flex-col max-w-7xl mx-auto">
-        <div className="flex relative text-[#1F3824] items-start justify-start">
-          <h2 className="font-sans text-center text-[#FF9DB4] font-bold text-3xl md:text-6xl xl:text-9xl max-w-none">
+    <section className="my-12 md:my-20 mx-auto px-4 md:px-6">
+      <div className="mx-auto grid w-full max-w-[1120px] gap-3 md:grid-cols-[1.2fr_1fr] md:items-end md:gap-8">
+        <div className="leading-[0.9] text-[#FF9DB4]">
+          <h2 className="font-sans text-5xl font-bold md:text-[6.2rem]">
             100% Independent.
           </h2>
-        </div>
-        <div className="flex md:flex-row flex-col items-start md:items-end gap-2 md:gap-10 w-full flex-1">
-          <p className="md:text-6xl xl:text-9xl text-center text-[#FF9DB4] font-bold text-3xl max-w-none">
+          <p className="font-sans text-5xl font-bold md:text-[6.2rem]">
             Always.
           </p>
-          <p className="text-xl md:text-base xl:text-3xl font-bold text-[#386641]">
-            We{' '}
-            <span className="text-[#AEB93E]">never monetize</span>
-            {' '}through brand deals, affiliate links, or ads — so
-            <span className="text-[#AEB93E]"> you can trust</span> our{' '}
-            <span className="text-[#AEB93E]">recommendations</span>
-            {' '}are always aligned with our users.
-          </p>
         </div>
+        <p className="max-w-[36rem] text-lg font-bold leading-[1.3] text-[#386641] md:pb-3 md:text-[2.05rem] md:leading-[1.14]">
+          We <span className="text-[#AEB93E]">never monetize</span> through brand deals, affiliate links, or ads
+          {' '}-- so <span className="text-[#AEB93E]">you can trust</span> our <span className="text-[#AEB93E]">recommendations</span> are always
+          aligned with our users.
+        </p>
       </div>
-    </div>
+    </section>
   );
 }

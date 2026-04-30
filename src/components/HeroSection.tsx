@@ -8,22 +8,52 @@ const avatars = [
 { src: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60', alt: 'User 3' },
 { src: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60', alt: 'User 4' }];
 
-
-const productImages = [
-{ src: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=200&q=80', alt: 'Organic Bagels' },
-{ src: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=200&q=80', alt: 'Healthy Snack' },
-{ src: 'https://images.unsplash.com/photo-1559181567-c3190bba0ade?w=200&q=80', alt: 'Sparkling Water' },
-{ src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&q=80', alt: 'Crackers' },
-{ src: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=200&q=80', alt: 'Mineral Water' },
-{ src: 'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&q=80', alt: 'Chips' },
-{ src: 'https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=200&q=80', alt: 'Granola Bar' },
-{ src: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=200&q=80', alt: 'Candy' },
-{ src: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=200&q=80', alt: 'Milk' },
-{ src: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=200&q=80', alt: 'Tortilla Chips' }];
+const featuredProducts = [
+  {
+    src: 'https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?w=900&q=80',
+    alt: 'Fig and olive crackers',
+    title: 'Fig and Olive Crackers, Fig and Olive',
+    brand: 'Lesley Stowe',
+    subBrand: '',
+    score: 46,
+    verdict: 'Avoid',
+    accent: 'bg-red-400',
+    icon: '🥒',
+    insight:
+      "This product's low score mainly comes from the processed sugars, like honey and brown sugar, which can impact your family's health when consumed frequently. Additionally, there are several additives that aren't ideal for your goal of avoiding processed foods, making this a choice to consider more carefully.",
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=900&q=80',
+    alt: 'Fresh grocery basket',
+    title: 'Fresh Veggie Snack Box with Fruit and Hummus',
+    brand: 'Daily Harvest',
+    subBrand: 'Independent',
+    score: 91,
+    verdict: 'Great',
+    accent: 'bg-emerald-500',
+    icon: '🥬',
+    insight:
+      'This option scores well because it leans on whole foods, fiber-rich produce, and a short ingredient list without heavily refined oils.',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=900&q=80',
+    alt: 'Sparkling water can',
+    title: 'Lime Sparkling Water with Natural Citrus Flavor',
+    brand: 'Spindrift',
+    subBrand: '',
+    score: 84,
+    verdict: 'Good',
+    accent: 'bg-lime-500',
+    icon: '🍋',
+    insight:
+      'This drink remains a solid pick because it has simple ingredients and no added sweeteners, though natural flavors keep it from a near-perfect score.',
+  },
+];
 
 
 export default function HeroSection() {
   const [scrollY, setScrollY] = useState(0);
+  const [activeSlide, setActiveSlide] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,7 +62,17 @@ export default function HeroSection() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const phoneTranslateY = Math.min(scrollY * 0.3, 80);
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % featuredProducts.length);
+    }, 3200);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const activeProduct = featuredProducts[activeSlide];
+  const previousProduct = featuredProducts[(activeSlide + featuredProducts.length - 1) % featuredProducts.length];
+  const nextProduct = featuredProducts[(activeSlide + 1) % featuredProducts.length];
 
   return (
     <div className="flex flex-col items-center pb-0">
@@ -88,26 +128,55 @@ export default function HeroSection() {
         ref={heroRef}
         className="relative z-50 w-full max-w-2xl mx-auto overflow-visible"
         style={{ minHeight: '600px' }}>
-
-        {/* Scrolling product images behind phone */}
-        <div className="absolute inset-0 top-0 flex justify-center overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%)' }}>
-          <div className="flex gap-3 items-center animate-scroll-left" style={{ width: 'max-content' }}>
-            {[...productImages, ...productImages, ...productImages]?.map((img, i) =>
-            <div key={i} className="relative w-24 h-24 shrink-0 rounded-2xl overflow-hidden" style={{ opacity: 0.3, transform: 'scale(0.85)' }}>
-                <Image src={img?.src} alt={img?.alt} fill className="object-cover" sizes="96px" />
-              </div>
-            )}
-          </div>
-        </div>
-
         {/* Phone frame */}
         <div
           className="relative mx-auto"
           style={{
             width: '280px',
-            transform: `translateY(${phoneTranslateY}px)`,
-            transition: 'transform 0.1s ease-out'
+            transform: 'translateY(0)',
+            transition: 'none'
           }}>
+
+          {/* Carousel cards emerging from phone */}
+          <div className="pointer-events-none absolute inset-x-[-120px] top-[92px] flex items-center justify-between">
+            <div className="relative h-[82px] w-[82px] overflow-hidden rounded-[22px] opacity-20 blur-[0.2px]">
+              <Image
+                key={`${previousProduct.title}-left`}
+                src={previousProduct.src}
+                alt={previousProduct.alt}
+                fill
+                className="object-cover"
+                sizes="82px" />
+            </div>
+            <div className="relative h-[82px] w-[82px] overflow-hidden rounded-[22px] opacity-20 blur-[0.2px]">
+              <Image
+                key={`${nextProduct.title}-right`}
+                src={nextProduct.src}
+                alt={nextProduct.alt}
+                fill
+                className="object-cover"
+                sizes="82px" />
+            </div>
+          </div>
+
+          <div className="pointer-events-none absolute inset-x-[-185px] top-[118px] flex items-center justify-between">
+            <div className="relative h-[64px] w-[64px] overflow-hidden rounded-[18px] opacity-10">
+              <Image
+                src={featuredProducts[(activeSlide + featuredProducts.length - 2) % featuredProducts.length].src}
+                alt={featuredProducts[(activeSlide + featuredProducts.length - 2) % featuredProducts.length].alt}
+                fill
+                className="object-cover"
+                sizes="64px" />
+            </div>
+            <div className="relative h-[64px] w-[64px] overflow-hidden rounded-[18px] opacity-10">
+              <Image
+                src={featuredProducts[(activeSlide + 2) % featuredProducts.length].src}
+                alt={featuredProducts[(activeSlide + 2) % featuredProducts.length].alt}
+                fill
+                className="object-cover"
+                sizes="64px" />
+            </div>
+          </div>
 
           {/* 3D shadow/depth effect */}
           <div
@@ -122,89 +191,113 @@ export default function HeroSection() {
 
           {/* Phone outer shell */}
           <div
-            className="relative bg-white rounded-[36px] overflow-hidden"
+            className="relative rounded-[40px] bg-gradient-to-b from-[#d8d8d8] to-[#cfcfcf] p-[12px]"
             style={{
-              boxShadow: '0 30px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8)',
+              height: '560px',
+              boxShadow: '0 30px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.65)',
               transform: 'perspective(1000px) rotateX(5deg)'
             }}>
-
-            {/* Dynamic Island / Notch */}
-            <div className="flex justify-center pt-3 pb-1">
-              <div className="bg-black h-6 w-24 rounded-full flex items-center justify-end pr-2">
-                <div className="h-4 w-4 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(255,255,255,0.04)_72%,rgba(255,255,255,0.16)_100%)]"></div>
+            <div className="relative h-full overflow-hidden rounded-[32px] bg-white">
+              {/* Dynamic Island / Notch */}
+              <div className="flex justify-center pt-4 pb-2">
+                <div className="bg-black h-6 w-24 rounded-full flex items-center justify-end pr-2">
+                  <div className="h-4 w-4 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(255,255,255,0.04)_72%,rgba(255,255,255,0.16)_100%)]"></div>
+                </div>
               </div>
-            </div>
 
-            {/* App Screen Content */}
-            <div className="bg-white px-0 pb-6">
+              {/* App Screen Content */}
+              <div className="flex h-[512px] flex-col bg-white pb-6">
               {/* Product image carousel area */}
-              <div className="relative h-44 bg-gray-50 overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Image
-                    src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&q=80"
-                    alt="Late July Snacks Thin and Crispy Organic Tortilla"
-                    fill
-                    className="object-cover"
-                    sizes="280px" />
+              <div className="relative h-[184px] overflow-hidden bg-white">
+                <div className="absolute inset-x-0 top-4 flex items-start justify-center gap-3">
+                  <div className="relative mt-6 h-[64px] w-[64px] overflow-hidden rounded-[18px] opacity-25">
+                    <Image
+                      src={previousProduct.src}
+                      alt={previousProduct.alt}
+                      fill
+                      className="object-cover"
+                      sizes="64px" />
+                  </div>
+                  <div className="relative h-[96px] w-[96px] overflow-hidden rounded-[24px] shadow-sm transition-all duration-500 ease-out">
+                    <Image
+                      key={activeProduct.title}
+                      src={activeProduct.src}
+                      alt={activeProduct.alt}
+                      fill
+                      className="object-cover"
+                      sizes="96px" />
+                  </div>
+                  <div className="relative mt-6 h-[64px] w-[64px] overflow-hidden rounded-[18px] opacity-25">
+                    <Image
+                      src={nextProduct.src}
+                      alt={nextProduct.alt}
+                      fill
+                      className="object-cover"
+                      sizes="64px" />
+                  </div>
+                </div>
 
-                </div>
-                {/* Side product thumbnails */}
-                <div className="absolute left-2 top-1/2 -translate-y-1/2 w-14 h-14 rounded-xl overflow-hidden opacity-60 shadow-md">
-                  <Image src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=100&q=80" alt="Product" fill className="object-cover" sizes="56px" />
-                </div>
-                <div className="absolute right-2 top-1/2 -translate-y-1/2 w-14 h-14 rounded-xl overflow-hidden opacity-60 shadow-md">
-                  <Image src="https://images.unsplash.com/photo-1559181567-c3190bba0ade?w=100&q=80" alt="Product" fill className="object-cover" sizes="56px" />
+                <div className="absolute inset-x-0 bottom-0 rounded-t-[28px] bg-white px-5 pt-5 pb-0">
+                  <div className="mx-auto mb-4 h-1 w-7 rounded-full bg-gray-200"></div>
+                  <div className="flex items-start gap-3">
+                    <div className="h-[72px] w-[40px] rounded-[10px] overflow-hidden flex-shrink-0 shadow-sm">
+                      <Image
+                        src={activeProduct.src}
+                        alt={activeProduct.alt}
+                        width={40}
+                        height={72}
+                        className="object-cover w-full h-full" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="pr-2 text-[15px] font-semibold text-gray-900 leading-[1.15]">
+                        {activeProduct.title.length > 44 ? `${activeProduct.title.slice(0, 44)}...` : activeProduct.title}
+                      </p>
+                      <div className="mt-2 flex items-center gap-2">
+                        <p className="text-sm text-gray-500">{activeProduct.brand}</p>
+                        {activeProduct.subBrand ?
+                        <span className="rounded-full bg-[#F7E7E3] px-2 py-0.5 text-[11px] font-medium text-[#B45E4E]">
+                            {activeProduct.subBrand}
+                          </span> : null}
+                      </div>
+                      <div className="mt-3 flex items-center justify-between">
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <div className={`h-2.5 w-2.5 rounded-full ${activeProduct.accent}`}></div>
+                            <span className="text-[15px] font-semibold text-gray-900">{activeProduct.score}/100</span>
+                          </div>
+                          <p className="ml-4 mt-0.5 text-[12px] text-gray-500">{activeProduct.verdict}</p>
+                        </div>
+                        <div className="flex gap-4 pt-1 text-gray-400">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {/* Product info card */}
-              <div className="px-4 pt-3">
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
-                    <Image
-                      src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=100&q=80"
-                      alt="Late July Snacks"
-                      width={48}
-                      height={48}
-                      className="object-cover w-full h-full" />
-
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-bold text-gray-900 leading-tight">Late July Snacks Thin and Crispy Organic Tortilla C...</p>
-                    <div className="flex items-center gap-1 mt-0.5">
-                      <span className="text-xs text-gray-500">Late July</span>
-                      <span className="text-xs bg-red-100 text-red-600 px-1.5 py-0.5 rounded-full font-medium">Campbell&apos;s</span>
-                    </div>
-                    <div className="flex items-center justify-between mt-1">
-                      <div className="flex items-center gap-1">
-                        <div className="w-3 h-3 rounded-full bg-amber-400"></div>
-                        <span className="text-sm font-bold text-gray-900">58/100</span>
-                        <span className="text-xs text-gray-400">Limit</span>
-                      </div>
-                      <div className="flex gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+              <div className="flex-1 px-4 pt-3">
                 {/* Oliver Says */}
-                <div className="bg-gray-50 rounded-xl p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 rounded-full bg-[#AEB93E] flex items-center justify-center">
-                      <span className="text-white text-xs font-bold">O</span>
+                <div
+                  key={`insight-${activeProduct.title}`}
+                  className="animate-slide-up rounded-2xl border border-gray-100 bg-white px-4 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+                  <div className="mb-2 flex items-center gap-2">
+                    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EEF5D1] text-sm">
+                      <span>{activeProduct.icon}</span>
                     </div>
-                    <span className="text-xs font-bold text-gray-900">Oliver Says:</span>
+                    <span className="text-[13px] font-bold text-gray-900">Oliver Says:</span>
                   </div>
-                  <p className="text-xs text-gray-600 leading-relaxed">
-                    &quot;This snack&apos;s score is primarily affected by the presence of organic sunflower oil and safflower oil, which are considered seed oils and can be less healthy for your family. While it does have some organic ingredients, the high level of seed oils suggests it&apos;s best to enjoy this treat only occasionally.&quot;
+                  <p className="line-clamp-6 text-[11px] text-gray-600 leading-[1.55]">
+                    &quot;{activeProduct.insight}&quot;
                   </p>
                 </div>
 
                 <div className="mt-3">
                   <p className="text-xs font-bold text-gray-900">Breakdown</p>
                 </div>
+              </div>
               </div>
             </div>
           </div>

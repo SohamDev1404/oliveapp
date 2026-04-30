@@ -9,6 +9,18 @@
   .animate-scroll-right {
     animation: scroll-right 25s linear infinite;
   }
+  .animate-scan-line {
+    animation: scan-line 2.4s ease-in-out infinite;
+  }
+  .animate-olive-scan {
+    animation: olive-scan 2.4s ease-in-out infinite;
+  }
+  .animate-analysis-pop {
+    animation: analysis-pop 2.8s ease-in-out infinite;
+  }
+  .animate-scroll-up-slow {
+    animation: scroll-up-slow 10s linear infinite;
+  }
 }
 
 @keyframes scroll-left {
@@ -19,4 +31,25 @@
 @keyframes scroll-right {
   0% { transform: translateX(-50%); }
   100% { transform: translateX(0); }
+}
+
+@keyframes scan-line {
+  0%, 100% { top: 34%; opacity: 0.45; }
+  50% { top: 68%; opacity: 0.9; }
+}
+
+@keyframes olive-scan {
+  0%, 100% { transform: rotate(24deg) scale(0.98); }
+  50% { transform: rotate(24deg) scale(1.03); }
+}
+
+@keyframes analysis-pop {
+  0%, 18%, 100% { transform: translateY(0) scale(0.92); opacity: 0.35; }
+  28%, 52% { transform: translateY(-4px) scale(1); opacity: 1; }
+  62%, 82% { transform: translateY(0) scale(0.94); opacity: 0.45; }
+}
+
+@keyframes scroll-up-slow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
 }
