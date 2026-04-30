@@ -2,10 +2,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
-const strausShelfImage = 'https://images.unsplash.com/photo-1571212515416-fca88ef90f02?w=700&q=80';
-const olipopImage = 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=700&q=80';
-const honeyMamasImage = 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=700&q=80';
-const strausPackshotImage = 'https://images.unsplash.com/photo-1570821473041-8af52fdcccf4?w=200&q=80';
+const strausShelfImage = '/assets/images/straus-icecream.png';
+const olipopImage = '/assets/images/olipop-strawberry-vanilla.png';
+const honeyMamasImage = '/assets/images/honey-mamas.png';
+const strausPackshotImage = '/assets/images/straus-icecream.png';
 
 const CheckIcon = ({ className = '' }: {className?: string;}) =>
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" className={className}>
