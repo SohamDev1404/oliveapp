@@ -1,7 +1,8 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import oliveBarcodeImage from 'C:/Users/Soham/.cursor/projects/c-Users-Soham-Downloads-oliveapp/assets/c__Users_Soham_AppData_Roaming_Cursor_User_workspaceStorage_139a11e37078d70ca7773777707ee47b_images_image-8922d5ff-ee56-4f3e-aca3-ffdf4cdd980b.png';
+
+const oliveBarcodeImage = 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=300&q=80';
 
 const CheckIcon = ({ className = '' }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" className={className}>

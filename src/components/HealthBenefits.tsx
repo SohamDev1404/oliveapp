@@ -1,10 +1,11 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import strausShelfImage from 'C:/Users/Soham/.cursor/projects/c-Users-Soham-Downloads-oliveapp/assets/c__Users_Soham_AppData_Roaming_Cursor_User_workspaceStorage_139a11e37078d70ca7773777707ee47b_images_image-74cdcd09-ae62-4856-bb3f-f4a3de61a17c.png';
-import olipopImage from 'C:/Users/Soham/.cursor/projects/c-Users-Soham-Downloads-oliveapp/assets/c__Users_Soham_AppData_Roaming_Cursor_User_workspaceStorage_139a11e37078d70ca7773777707ee47b_images_image-ef12785f-94d0-40bc-a9b0-2d9f75f35247.png';
-import honeyMamasImage from 'C:/Users/Soham/.cursor/projects/c-Users-Soham-Downloads-oliveapp/assets/c__Users_Soham_AppData_Roaming_Cursor_User_workspaceStorage_139a11e37078d70ca7773777707ee47b_images_image-c158f468-03d4-47a8-8473-1ed0d763df53.png';
-import strausPackshotImage from 'C:/Users/Soham/.cursor/projects/c-Users-Soham-Downloads-oliveapp/assets/c__Users_Soham_AppData_Roaming_Cursor_User_workspaceStorage_139a11e37078d70ca7773777707ee47b_images_image-f4534749-878e-486f-801e-71da40097dc1.png';
+
+const strausShelfImage = 'https://images.unsplash.com/photo-1571212515416-fca88ef90f02?w=700&q=80';
+const olipopImage = 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=700&q=80';
+const honeyMamasImage = 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=700&q=80';
+const strausPackshotImage = 'https://images.unsplash.com/photo-1570821473041-8af52fdcccf4?w=200&q=80';
 
 const CheckIcon = ({ className = '' }: {className?: string;}) =>
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" className={className}>
